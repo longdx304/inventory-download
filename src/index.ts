@@ -11,7 +11,20 @@ const {
   FieldValue,
 } = require('firebase-admin/firestore');
 
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = require('../serviceAccountKey.json');
+
+interface Stock {
+  id: string;
+  warehouse: string;
+  quantity: number;
+  quality: number;
+}
+
+interface Inventory {
+  position: string;
+  quantity: number;
+  unit: string;
+}
 
 initializeApp({
   credential: cert(serviceAccount),
@@ -19,15 +32,15 @@ initializeApp({
 
 const db = getFirestore();
 
-const stock = [];
+const stock: Stock[] = [];
 
 const getData = async () => {
   const snapshot = await db.collection('products').get();
-  snapshot.forEach((doc) => {
+  snapshot.forEach((doc: any) => {
     const id = doc.id;
     const warehouse = 'KHH-HCM';
     let quantity = 0;
-    doc.data().inventory.forEach((count) => {
+    doc.data().inventory.forEach((count: Inventory) => {
       switch (count.unit) {
         case 'đôi':
           quantity += 1 * count.quantity;
@@ -76,9 +89,8 @@ const printData = async () => {
   });
 
   try {
-    const data = await workbook.xlsx
-      .writeFile(`${path}/Kiem_ke_vat_tu_hang_hoa.xlsx`)
-      .then(() => console.log('file successfully generated'));
+    await workbook.xlsx.writeFile(`${path}/Kiem_ke_vat_tu_hang_hoa.xlsx`);
+    console.log('file successfully generated');
   } catch (err) {
     console.log('Something went wrong');
   }
