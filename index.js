@@ -42,7 +42,11 @@ const getData = async () => {
           quantity += 6 * count.quantity;
           break;
         case 'thùng':
-          quantity += 6 * count.quantity;
+          if (doc.id.slice(0, 3) === 'aer') {
+            quantity += 12 * count.quantity;
+          } else {
+            quantity += 6 * count.quantity;
+          }
           break;
         case 'bịch 12':
           quantity += 12 * count.quantity;
