@@ -15,6 +15,7 @@ const serviceAccount = require('../serviceAccountKey.json');
 
 interface Stock {
   id: string;
+  // name: string;
   warehouse: string;
   quantity: number;
   quality: number;
@@ -38,6 +39,7 @@ const getData = async () => {
   const snapshot = await db.collection('products').get();
   snapshot.forEach((doc: any) => {
     const id = doc.id;
+    // const name = doc.data().name;
     const warehouse = 'KHH-HCM';
     let quantity = 0;
     doc.data().inventory.forEach((count: Inventory) => {
@@ -68,6 +70,7 @@ const getData = async () => {
     });
     const quality = quantity;
     stock.push({ id, warehouse, quantity, quality });
+    // stock.push({ id, name, warehouse, quantity, quality });
   });
 };
 
@@ -79,6 +82,7 @@ const printData = async () => {
   const path = './';
   worksheet.columns = [
     { header: 'Mã hàng (*)', key: 'id', width: 10 },
+    // { header: 'Tên', key: 'name', width: 10 },
     { header: 'Kho (*)', key: 'warehouse', width: 10 },
     { header: 'Số lượng theo kiểm kê', key: 'quantity', width: 10 },
     { header: 'Còn tốt 100%', key: 'quality', width: 10 },
