@@ -47,6 +47,9 @@ const getData = async () => {
         case 'đôi':
           quantity += 1 * count.quantity;
           break;
+        case 'bao 240':
+          quantity += 240 * count.quantity;
+          break;
         case 'bao 120':
           quantity += 120 * count.quantity;
           break;
@@ -65,6 +68,9 @@ const getData = async () => {
           break;
         case 'bịch 12':
           quantity += 12 * count.quantity;
+          break;
+        case 'giỏ 24':
+          quantity += 24 * count.quantity;
           break;
       }
     });
